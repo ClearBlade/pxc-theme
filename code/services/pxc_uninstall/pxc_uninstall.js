@@ -4,8 +4,8 @@
  * @param {CbServer.Resp} resp
  */
 
-function {{component_prefix}}_teardown(req, resp) {
+function pxc_uninstall(req, resp) {
   const params = req.params;
-  //component teardown behavior here. Undo any setup done in the setup service
+  //component uninstall behavior here, undo any steps done in the install service
   resp.success('Success');
 }

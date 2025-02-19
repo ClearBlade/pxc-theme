@@ -17,23 +17,23 @@
         "CodeServices": [
             {
                 "Level": 1,
-                "Name": "{{component_prefix}}_install"
+                "Name": "pxc_install"
             },
             {
                 "Level": 1,
-                "Name": "{{component_prefix}}_setup"
+                "Name": "pxc_setup"
             },
             {
                 "Level": 1,
-                "Name": "{{component_prefix}}_teardown"
+                "Name": "pxc_teardown"
             },
             {
                 "Level": 1,
-                "Name": "{{component_prefix}}_uninstall"
+                "Name": "pxc_uninstall"
             },
             {
                 "Level": 1,
-                "Name": "{{component_prefix}}_update"
+                "Name": "pxc_update"
             }
         ],
         "Collections": [],
