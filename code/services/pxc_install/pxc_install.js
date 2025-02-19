@@ -10,8 +10,6 @@ function pxc_install(req, resp) {
   var component_id = params.component_id;
   var mfe_settings = params.mfe_settings;
 
-  var settingsCollection = ClearBlade.Collection({ collectionName: "custom_settings" });
-
   var brandingData = {
       id: "brand",
       config: JSON.stringify([{
@@ -22,69 +20,36 @@ function pxc_install(req, resp) {
               titleText: "Phoenix Contact"
           }
       }]),
-      description: "" 
+      description: "Branding Configuration for Phoenix Contact"
   };
 
-  var query = ClearBlade.Query();
-  query.equalTo("id", "brand");
-
-  settingsCollection.fetch(query, function (err, data) {
+  var settingsCollection = ClearBlade.Collection({ collectionName: "custom_settings" });
+  log("Creating new brand row");
+  settingsCollection.create(brandingData, function (err, data) {
       if (err) {
-          resp.error("Error checking existing branding in custom_settings: " + JSON.stringify(err));
-          return;
-      }
-
-      if (data.DATA.length > 0) {
-          var itemId = data.DATA[0].item_id; 
-          settingsCollection.update(itemId, brandingData, function (err, data) {
-              if (err) {
-                  resp.error("Failed to update branding in custom_settings: " + JSON.stringify(err));
-              } else {
-
-                  var configData = JSON.parse(brandingData.config);
-                  var pxcLogoUrl = configData[0].logo.logoUrl;
-
-                  var themeCollection = ClearBlade.Collection({ collectionName: "custom_settings" });
-                  var themeData = {
-                      entity_id: entity_id,
-                      component_id: component_id,
-                      settings: JSON.stringify(mfe_settings),
-                      logo_url: pxcLogoUrl
-                  };
-
-                  themeCollection.create(themeData, function (err, data) {
-                      if (err) {
-                          resp.error("Failed to save theme settings: " + JSON.stringify(err));
-                      } else {
-                          resp.success("PXC Theme Component Installed Successfully with Logo from custom_settings!");
-                      }
-                  });
-              }
-          });
+          log("Create error: " + JSON.stringify(err));
+          resp.error("Failed to create branding in custom_settings: " + JSON.stringify(err));
       } else {
-          settingsCollection.create(brandingData, function (err, data) {
+          log("Brand row created successfully: " + JSON.stringify(data));
+
+          var configData = JSON.parse(brandingData.config);
+          var pxcLogoUrl = configData[0].logo.logoUrl;
+
+          var themeCollection = ClearBlade.Collection({ collectionName: "custom_settings" });
+          var themeData = {
+              entity_id: entity_id,
+              component_id: component_id,
+              settings: JSON.stringify(mfe_settings),
+              logo_url: pxcLogoUrl
+          };
+
+          themeCollection.create(themeData, function (err, data) {
               if (err) {
-                  resp.error("Failed to create branding in custom_settings: " + JSON.stringify(err));
+                  log("Theme creation error: " + JSON.stringify(err));
+                  resp.error("Failed to save theme settings: " + JSON.stringify(err));
               } else {
-
-                  var configData = JSON.parse(brandingData.config);
-                  var pxcLogoUrl = configData[0].logo.logoUrl;
-
-                  var themeCollection = ClearBlade.Collection({ collectionName: "custom_settings" });
-                  var themeData = {
-                      entity_id: entity_id,
-                      component_id: component_id,
-                      settings: JSON.stringify(mfe_settings),
-                      logo_url: pxcLogoUrl
-                  };
-
-                  themeCollection.create(themeData, function (err, data) {
-                      if (err) {
-                          resp.error("Failed to save theme settings: " + JSON.stringify(err));
-                      } else {
-                          resp.success("PXC Theme Component Installed Successfully with Logo from custom_settings!");
-                      }
-                  });
+                  log("Theme created successfully: " + JSON.stringify(data));
+                  resp.success("PXC Theme Component Installed Successfully with Logo from custom_settings!");
               }
           });
       }
