@@ -9,12 +9,14 @@ function pxc_install(req, resp) {
   var entity_id = params.entity_id;
   var component_id = params.component_id;
   var mfe_settings = params.mfe_settings;
+  var systemKey = "f49ba7fb0cb09ad5abccecb1c0ec01"; 
+  var userToken = req.userToken; 
 
   var brandingData = {
       id: "brand",
       config: JSON.stringify([{
           logo: {
-              logoUrl: "https://cdn.freebiesupply.com/logos/large/2x/phoenix-contact-1-logo-png-transparent.png"
+              logoUrl: "https://www.cn.ca/Images/CN/CN-logo.png"
           },
           title: {
               titleText: "Phoenix Contact"
@@ -23,19 +25,28 @@ function pxc_install(req, resp) {
       description: "Branding Configuration for Phoenix Contact"
   };
 
-  var settingsCollection = ClearBlade.Collection({ collectionName: "custom_settings" });
-  log("Creating new brand row");
-  settingsCollection.create(brandingData, function (err, data) {
-      if (err) {
-          log("Create error: " + JSON.stringify(err));
-          resp.error("Failed to create branding in custom_settings: " + JSON.stringify(err));
-      } else {
-          log("Brand row created successfully: " + JSON.stringify(data));
+  var brandingUrl = "https://demo.clearblade.com/api/v/1/collection/" + systemKey + "/custom_settings";
+  var brandingOptions = {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          "ClearBlade-UserToken": userToken
+      },
+      body: JSON.stringify(brandingData)
+  };
 
+  fetch(brandingUrl, brandingOptions)
+      .then(function (response) {
+          if (!response.ok) {
+              throw new Error("Failed to create branding data: " + response.statusText);
+          }
+          return response.json();
+      })
+      .then(function (responseData) {
+          log("Branding data created successfully: " + JSON.stringify(responseData));
           var configData = JSON.parse(brandingData.config);
           var pxcLogoUrl = configData[0].logo.logoUrl;
 
-          var themeCollection = ClearBlade.Collection({ collectionName: "custom_settings" });
           var themeData = {
               entity_id: entity_id,
               component_id: component_id,
@@ -43,15 +54,30 @@ function pxc_install(req, resp) {
               logo_url: pxcLogoUrl
           };
 
-          themeCollection.create(themeData, function (err, data) {
-              if (err) {
-                  log("Theme creation error: " + JSON.stringify(err));
-                  resp.error("Failed to save theme settings: " + JSON.stringify(err));
-              } else {
-                  log("Theme created successfully: " + JSON.stringify(data));
-                  resp.success("PXC Theme Component Installed Successfully with Logo from custom_settings!");
-              }
-          });
-      }
-  });
+          var themeUrl = "https://demo.clearblade.com/api/v/1/collection/" + systemKey + "/custom_settings";
+          var themeOptions = {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "ClearBlade-UserToken": userToken
+              },
+              body: JSON.stringify(themeData)
+          };
+
+          return fetch(themeUrl, themeOptions);
+      })
+      .then(function (response) {
+          if (!response.ok) {
+              throw new Error("Failed to create theme data: " + response.statusText);
+          }
+          return response.json();
+      })
+      .then(function (responseData) {
+          log("Theme data created successfully: " + JSON.stringify(responseData));
+          resp.success("PxC Theme Component Installed Successfully with Logo from custom_settings!");
+      })
+      .catch(function (error) {
+          log("Error in installation: " + JSON.stringify(error));
+          resp.error("Failed to install PxC Theme Component: " + JSON.stringify(error));
+      });
 }
