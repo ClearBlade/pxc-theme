@@ -4,7 +4,7 @@
  * @param {CbServer.Resp} resp
  */
  function pxc_uninstall(req, resp) {
-  /*
+  
   var params = req.params;
   var entity_id = params.entity_id;
   var component_id = params.component_id;
@@ -56,4 +56,5 @@
               log("Error deleting theme data: " + JSON.stringify(error));
               resp.error("Failed to uninstall PXC Theme Component: " + JSON.stringify(error));
           });
-        */ }
+         }
+        }
