@@ -3,12 +3,12 @@
  * @param {CbServer.BasicReq & {params: UninstallParams}} req
  * @param {CbServer.Resp} resp
  */
-
-function pxc_uninstall(req, resp) {
+ function pxc_uninstall(req, resp) {
+  /*
   var params = req.params;
   var entity_id = params.entity_id;
   var component_id = params.component_id;
-  var systemKey = "dcd2b1fb0ceceeeeaad794a7a99a01"; 
+  var systemKey = "b6fcb1fb0c8085f2a5a48ee6a3ac01"; 
   var userToken = req.userToken;
   var baseUrl = "https://demo.clearblade.com/api/v/1/collection/" + systemKey + "/custom_settings";
   var brandQuery = "brand";
@@ -56,5 +56,4 @@ function pxc_uninstall(req, resp) {
               log("Error deleting theme data: " + JSON.stringify(error));
               resp.error("Failed to uninstall PXC Theme Component: " + JSON.stringify(error));
           });
-  }
-}
+        */ }

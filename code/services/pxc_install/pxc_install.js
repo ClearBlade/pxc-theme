@@ -5,6 +5,7 @@
  */
 
 function pxc_install(req, resp) {
+  /*
   var params = req.params;
   var entity_id = params.entity_id;
   var component_id = params.component_id;
@@ -80,4 +81,5 @@ function pxc_install(req, resp) {
           log("Error in installation: " + JSON.stringify(error));
           resp.error("Failed to install PxC Theme Component: " + JSON.stringify(error));
       });
+      */
 }
