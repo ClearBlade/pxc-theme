@@ -9,14 +9,14 @@ function pxc_install(req, resp) {
   var entity_id = params.entity_id;
   var component_id = params.component_id;
   var mfe_settings = params.mfe_settings;
-  var systemKey = "f49ba7fb0cb09ad5abccecb1c0ec01"; 
+  var systemKey = "dcd2b1fb0ceceeeeaad794a7a99a01"; 
   var userToken = req.userToken; 
 
   var brandingData = {
       id: "brand",
       config: JSON.stringify([{
           logo: {
-              logoUrl: "https://www.cn.ca/Images/CN/CN-logo.png"
+              logoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Phoenix_Contact_Logo.svg/2560px-Phoenix_Contact_Logo.svg.png"
           },
           title: {
               titleText: "Phoenix Contact"
