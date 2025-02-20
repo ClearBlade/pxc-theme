@@ -8,7 +8,7 @@
   var params = req.params;
   var entity_id = params.entity_id;
   var component_id = params.component_id;
-  var systemKey = "deefb9fb0ca0bdcd8d93fddce09a01"; 
+  var systemKey = "9c8abafb0caeb19bf7acc0bfc006"; 
   var userToken = req.userToken;
   var baseUrl = "https://demo.clearblade.com/api/v/1/collection/" + systemKey + "/custom_settings";
   var brandQuery = "brand";
