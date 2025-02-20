@@ -10,7 +10,7 @@ function pxc_install(req, resp) {
   var entity_id = params.entity_id;
   var component_id = params.component_id;
   var mfe_settings = params.mfe_settings;
-  var systemKey = "feefb2fb0ce8c9e8cd9496eaa04c"; 
+  var systemKey = "deefb9fb0ca0bdcd8d93fddce09a01"; 
   var userToken = req.userToken; 
 
   var brandingData = {
