@@ -17,7 +17,7 @@ function pxc_install(req, resp) {
       id: "brand",
       config: JSON.stringify([{
           logo: {
-              logoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Phoenix_Contact_Logo.svg/2560px-Phoenix_Contact_Logo.svg.png"
+              logoUrl: "https://symbols-electrical.getvecta.com/stencil_262/69_phoenix-contact-icon.72917d2b46.png"
           },
           title: {
               titleText: "Phoenix Contact"
